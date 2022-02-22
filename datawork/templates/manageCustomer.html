@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Manage Customers{% endblock  %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="col-12 mb-2">
+        <div class="card border-0 shadow" style="width: 1101px; margin-left:-12px">
+            <div class="card-body p-0 d-flex justify-content-between">
+                <p class="fs-2 fw-bold text-capitalize mb-1 ms-3">Manage Customers</p>
+                <a href="#vehicle" data-bs-toggle="modal" class="btn btn-success rounded-pill pt-1 me-2" style="height:40px; margin-top:7px">Add Customer</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card border-0 shadow px-0">
+            <div class="card-body">
+                {% if error != "" %}
+                    <div class="alert alert-danger">{{error}}</div>
+                {% endif %}
+                <table class="table">
+                    <tr>
+                        <th>ID</th>
+                        <th>Owner</th>
+                        <th>Vehicle Name</th>
+                        <th>Vehicle Number</th>
+                        <th>Vehicle Token</th>
+                        <th>Vehicle Category</th>
+                        <th>Vehicle Image</th>
+                        <th>Owner Image</th>
+                        <th>Vehicle Arrival</th>
+                        <th>Vehicle Departure</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr>
+                        <td colspan=11><p class="lead text-muted">Recent</p></td>
+                    </tr>
+
+                    {% for vh in today_vehicle %}
+                        <tr>
+                            <td>{{vh.id}}</td>
+                            <td>{{vh.vehicle_owner}}</td>
+                            <td>{{vh.vehicle_name}}</td>
+                            <td>{{vh.vehicle_number}}</td>
+                            <td>{{vh.vehicle_token}}</td>
+                            <td>{{vh.vehicle_category}}</td>
+                            <td><img src="{{vh.vehicle_image.url}}" style="width:40px"></td>
+                            <td><img src="{{vh.owner_image.url}}" style="width:40px"></td>
+                            <td>{{vh.vehicle_arrival}}</td>
+                            <td>{% if vh.vehicle_departure %}{{vh.vehicle_departure}} {% else %} <p class="small text-danger">Not departed yet</p> {% endif %}</td>
+                            <td>
+                                {% if vh.vehicle_departure %}
+                                    <p class="lead mt-3 text-center rounded" style="background-color:#eee">Departed</p>
+                                {% else %}
+                                <a href="{% url 'departCustomer' vh.id %}" class="btn btn-danger">Confirm Departure</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan=11><p class="lead text-muted">Older</p></td>
+                    </tr>
+
+                    {% for vh in vehicle %}
+                        <tr>
+                            <td>{{vh.id}}</td>
+                            <td>{{vh.vehicle_owner}}</td>
+                            <td>{{vh.vehicle_name}}</td>
+                            <td>{{vh.vehicle_number}}</td>
+                            <td>{{vh.vehicle_token}}</td>
+                            <td>{{vh.vehicle_category}}</td>
+                            <td><img src="{{vh.vehicle_image.url}}" style="width:40px"></td>
+                            <td><img src="{{vh.owner_image.url}}" style="width:40px"></td>
+                            <td>{{vh.vehicle_arrival}}</td>
+                            <td>{% if vh.vehicle_departure %}{{vh.vehicle_departure}} {% else %} <p class="small text-danger">Not departed yet</p> {% endif %}</td>
+                            <td>
+                                {% if vh.vehicle_departure %}
+                                    <p class="lead mt-3 text-center rounded" style="background-color:#eee">Departed</p>
+                                {% else %}
+                                <a href="{% url 'departCustomer' vh.id %}" class="btn btn-danger">Confirm Departure</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="vehicle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><p class="fs-4">Add Vehicle</p></div>
+            <div class="modal-body">
+                <form action="{% url 'manageCustomers' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <input type="submit" value="ADD VEHICLE" class="btn btn-success w-100">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+{% endblock  %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Homepage{% endblock  %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="col-12 mb-2">
+            <div class="card border-0 shadow">
+                <div class="card-body p-0">
+                    <p class="fs-2 fw-bold text-capitalize mb-1 me-auto ms-3">Dashboard</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card shadow border-0">
+                    <div class="card-body bg-primary rounded">
+                        <p class="fs-2 mb-0 fw-bold">{{total_booking}}</p>
+                        <p class="lead fs-4">Total Bookings</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shadow border-0">
+                    <div class="card-body bg-success rounded">
+                        <p class="fs-2 mb-0 fw-bold">{{category}}</p>
+                        <p class="lead fs-4">Categories Supported</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shadow border-0">
+                    <div class="card-body bg-danger rounded">
+                        <p class="fs-2 mb-0 fw-bold">{{today_booking}}</p>
+                        <p class="lead fs-4">Today's Bookings</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mt-2">
+                <div class="card shadow border-0">
+                    <div class="card-body bg-info rounded">
+                        <p class="fs-2 mb-0 fw-bold">{{total_earning.vehicle_category__category_price__sum}}</p>
+                        <p class="lead fs-4">Total Earning</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 mt-2">
+                <div class="card shadow border-0">
+                    <div class="card-body bg-warning rounded">
+                        <p class="fs-2 mb-0 fw-bold">{{today_earning.vehicle_category__category_price__sum}}</p>
+                        <p class="lead fs-4">Today's Earning</p>
+                    </div>
+                </div>
+            </div>
+            
+
+            
+        </div>
+    </div>
+{% endblock  %}
